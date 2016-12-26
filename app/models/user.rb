@@ -2,6 +2,8 @@ class User < ApplicationRecord
   before_save :encrypt_password
   after_save :clear_password
 
+  has_many :blogs, dependent: :destroy
+
   attr_accessor :password
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :name, :presence => true, :uniqueness => true, :length => { :in => 3..20 }
@@ -18,5 +20,13 @@ class User < ApplicationRecord
 
   def clear_password
     self.password = nil
+  end
+
+  def authenticate?(password)
+    return BCrypt::Engine.hash_secret(password, self.salt) == self.encrypted_password
+  end
+
+  def gen_token
+    Digest::SHA1.hexdigest(self.email + self.salt)
   end
 end
