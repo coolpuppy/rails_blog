@@ -9,10 +9,7 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
-<% puts logged_in? %>
 <%= render 'follow_form' if logged_in? %>
 
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
-<%= link_to 'Log out', logout_path, method: 'delete' %>
+<%= link_to 'Edit', edit_user_path(@user) if logged_in? && current_user?(@user) %>
