@@ -11,5 +11,7 @@
 </p>
 <%= render 'follow_form' if logged_in? %>
 
-
 <%= link_to 'Edit', edit_user_path(@user) if logged_in? && current_user?(@user) %>
+
+<%= link_to "Followings", followings_user_path(user_id: @user.id) %>
+<%= link_to "Followers", followers_user_path(user_id: @user.id) %>
