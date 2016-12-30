@@ -4,11 +4,11 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-
+# Use MySQL as the database for Active Record
 gem 'mysql2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
-# Use sqlite3 as the database for Active Record
+# sqlite3 has been replaced by mysql2
 gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
@@ -27,6 +27,8 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+#Use Kaminari to enable pagination
+gem 'kaminari'
 
 gem 'bcrypt', :require => 'bcrypt'
 # Use Redis adapter to run Action Cable in production
