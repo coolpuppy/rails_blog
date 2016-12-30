@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :redirect_to_user, :only => :new
+  before_action :redirect_to_current_user, :only => :new
 
   def new
   end
@@ -23,10 +23,6 @@ class SessionsController < ApplicationController
   def destroy
     log_out
     redirect_to root_url
-  end
-
-  def redirect_to_user
-    redirect_to user_url(current_user) if logged_in?
   end
 
 end

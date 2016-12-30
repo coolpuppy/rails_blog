@@ -41,4 +41,9 @@ module SessionsHelper
     end
     return true
   end
+
+  def redirect_to_current_user
+    redirect_to user_url(current_user) if logged_in?
+  end
+
 end
