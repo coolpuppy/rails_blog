@@ -1,20 +1,20 @@
 class SessionsController < ApplicationController
+  before_action :redirect_to_user, :only => :new
+
   def new
   end
 
   def create
-
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate?(params[:session][:password])
       log_in(user)
       @current_user = user
       if params[:session][:remember_me] == '1'
-
+        cookies[:user_id] = {value: user.id, expires: 2.weeks.from_now.utc}
+        cookies[:user_token] = {value: user.gen_token, expires: 2.weeks.from_now.utc}
       end
-      puts "Logged in succeed!!!!"
-      redirect_to user
+      redirect_to @current_user
     else
-      puts "Logged in failed!!!"
       flash.now[:danger] = 'Invalid email/password'
       render 'new'
     end
@@ -22,15 +22,11 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out
-    redirect_to users_url
+    redirect_to root_url
   end
 
-  def log_in(user)
-    session[:user_id] = user.id
+  def redirect_to_user
+    redirect_to user_url(current_user) if logged_in?
   end
 
-  def log_out
-    session.delete(:user_id)
-    @current_user = nil
-  end
 end

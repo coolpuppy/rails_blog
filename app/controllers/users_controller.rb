@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @blogs = @user.blogs.page(params[:page]).per(5)
+    @blogs = @user.blogs.order(created_at: :desc).page(params[:page]).per(5)
   end
 
   # GET /users/new
