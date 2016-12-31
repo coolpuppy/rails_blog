@@ -1,4 +1,28 @@
 <h1> This is the home page </h1>
 <% if logged_in? %>
-<%= link_to "Go to blogs", blogs_path %>
+  <% if @feed_items.any? %>
+        <table>
+          <thead>
+          <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Post at</th>
+            <th>User</th>
+            <th colspan="4"></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @feed_items.each do |feed| %>
+              <tr>
+                <td><%= feed.title %></td>
+                <td><%= feed.content %></td>
+                <td><%= feed.created_at %></td>
+                <td><%= link_to feed.user.name, user_path(feed.user_id) %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= paginate @feed_items %>
+  <% end %>
 <% end %>

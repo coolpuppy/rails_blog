@@ -1,4 +1,5 @@
 module SessionsHelper
+
   def current_user
     @current_user ||= User.find(session[:user_id])
   end
@@ -44,6 +45,13 @@ module SessionsHelper
 
   def redirect_to_current_user
     redirect_to user_url(current_user) if logged_in?
+  end
+
+  def logged_in_user
+    unless session[:user_id]
+      flash[:danger] = "Please log in"
+      redirect_to login_url
+    end
   end
 
 end

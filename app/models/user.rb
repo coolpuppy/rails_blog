@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :followings, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
+  has_many :feeds, through: :followings, source: :blogs
+
   attr_accessor :password
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :name, :presence => true, :uniqueness => true, :length => { :in => 3..20 }
