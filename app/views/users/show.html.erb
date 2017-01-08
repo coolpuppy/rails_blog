@@ -12,7 +12,7 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
-
+<% if @blogs.any? %>
 <table>
   <thead>
   <tr>
@@ -22,7 +22,6 @@
     <th colspan="3"></th>
   </tr>
   </thead>
-  <% if @blogs.any? %>
     <tbody>
     <% @blogs.each do |blog| %>
         <tr>
@@ -32,8 +31,10 @@
         </tr>
     <% end %>
     </tbody>
-  <% end %>
 </table>
 <%= paginate @blogs %>
+<% else %>
+    <p>This user has not posted any blogs yet!</p>
+<% end %>
 
 <%= render 'follow_form' if logged_in? %>
